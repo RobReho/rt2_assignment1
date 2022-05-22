@@ -11,6 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   message_generation
+  std_msgs
+  geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -134,7 +136,8 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
  add_executable(position_service src/position_service.cpp)
  add_executable(state_machine src/state_machine.cpp)
-
+ add_executable(dr20_controller src/dr20_controller.cpp)
+  
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -145,6 +148,7 @@ include_directories(
 ## same as for the library above
  add_dependencies(position_service ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  add_dependencies(state_machine ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+ add_dependencies(dr20_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  
 ## Specify libraries to link a library or executable target against
  target_link_libraries(position_service
@@ -155,6 +159,9 @@ include_directories(
    ${catkin_LIBRARIES}
  )
 
+target_link_libraries(dr20_controller
+   ${catkin_LIBRARIES}
+ )
 #############
 ## Install ##
 #############
