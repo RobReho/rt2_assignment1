@@ -32,7 +32,6 @@ int main(int argc, char **argv)
    ros::NodeHandle n;
    ros::ServiceServer service= n.advertiseService("/user_interface", user_interface);
    ros::ServiceClient client_rp = n.serviceClient<rt2_assignment1::RandomPosition>("/position_server");
-   //ros::ServiceClient client_p = n.serviceClient<rt2_assignment1::Position>("/go_to_point");
    actionlib::SimpleActionClient<rt2_assignment1::PlanningAction> ac("/reaching_goal", true);
    
    rt2_assignment1::RandomPosition rp;
@@ -53,7 +52,7 @@ int main(int argc, char **argv)
        		goal.target_pose.pose.position.x = rp.response.x;
        		goal.target_pose.pose.position.y = rp.response.y;
        		goal.target_pose.pose.orientation.w  = rp.response.theta;
-       		std::cout << "\nGoing to the position: x= " << goal.target_pose.pose.position.x << " y= " << goal.target_pose.pose.position.y << " theta = " << goal.target_pose.pose.orientation.w << std::endl;
+       		std::cout << "\nGoing to the position: x= " << goal.target_pose.pose.position.x << " y= " << goal.target_pose.pose.position.y << " theta = \n" << goal.target_pose.pose.orientation.w << std::endl;
        		ac.sendGoal(goal);
        		goalRunning = true;
        	}
@@ -63,14 +62,14 @@ int main(int argc, char **argv)
           		Result = ac.getResult();
           		result = (bool) Result->result;
           		if (result) {
-          		    std::cout << "Position reached" << std::endl;
+          		    std::cout << "Position reached\n" << std::endl;
           		    start = true;
           		}
        	    }
        	    
       		if (cancel){
       		    ac.cancelGoal();
-      		    std::cout << "Goal has been canceled" << std::endl;
+      		    std::cout << "Goal has been canceled\n" << std::endl;
       		    cancel = false;
       		}
        	}

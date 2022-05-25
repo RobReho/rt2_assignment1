@@ -144,6 +144,7 @@ def planning(goal):
         if act_s.is_preempt_requested():
             rospy.loginfo('Goal was preempted')
             act_s.set_preempted()
+            done()
             success = False
             break
         elif state_ == 0:
