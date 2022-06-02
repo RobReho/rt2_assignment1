@@ -16,7 +16,7 @@ pose_ = Pose()
 yaw_ = 0
 position_ = 0
 state_ = 0
-pub_ = None
+pub_ = None # publisher
 state_ = 0
 desired_position_ = Point()
 
@@ -34,6 +34,15 @@ ub_d = 0.6
 act_s = None
 
 def clbk_odom(msg):
+    """
+    Odometry callback
+
+    Retrieves the position and orientation quaternion 
+    from the Odom message.
+
+    Args:
+      msg (Odometry): odometry message.
+    """
     global position_
     global yaw_
     global pose_
@@ -52,17 +61,44 @@ def clbk_odom(msg):
 
 
 def change_state(state):
+    """
+    Updates the current global state
+
+    Args:
+      state (int):  new state
+    """
     global state_
     state_ = state
     print ('State changed to [%s]' % state_)
 
 
 def normalize_angle(angle):
+    """
+    Normalizes an angle berween [-pi, pi]
+
+    Args:
+      angle (float):  input angle
+      
+    Returns:
+      angle (float):  normalized angle
+    """
     if(math.fabs(angle) > math.pi):
         angle = angle - (2 * math.pi * angle) / (math.fabs(angle))
     return angle
 
 def fix_yaw(des_pos):
+    """
+    Orients the robot towards the desired orientation
+
+    The function is used to orient
+    the robot toward the goal (x,y) position. 
+    It changes to a new state, depending on the current
+    one.
+
+    Args:
+      des_yaw (float):  desired yaw
+      next_state (int): next state to set
+    """
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
     err_yaw = normalize_angle(desired_yaw - yaw_)
     rospy.loginfo(err_yaw)
@@ -81,6 +117,15 @@ def fix_yaw(des_pos):
 
 
 def go_straight_ahead(des_pos):
+    """
+    Goes straight towards the goal
+
+    Set the linear and angular speed
+    according to the distance to the goal pose.
+
+    Args:
+      des_pos (Point):  desired (x, y) position
+    """
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
     err_yaw = desired_yaw - yaw_
     err_pos = math.sqrt(pow(des_pos.y - position_.y, 2) +
@@ -106,6 +151,18 @@ def go_straight_ahead(des_pos):
         change_state(0)
 
 def fix_final_yaw(des_yaw):
+    """
+    Orients the robot towards the desired orientation
+
+    The function is used to orient
+    the robot to achieve the goal orientation. 
+    It changes to a new state, depending on the current
+    one.
+
+    Args:
+      des_yaw (float):  desired yaw
+      next_state (int): next state to set
+    """
     err_yaw = normalize_angle(des_yaw - yaw_)
     rospy.loginfo(err_yaw)
     twist_msg = Twist()
@@ -122,13 +179,31 @@ def fix_final_yaw(des_yaw):
         change_state(3)
         
 def done():
+    """
+    Stops the robot
+
+    Sets the robot linear and angular 
+    velocity to 0.0
+    """
     twist_msg = Twist()
     twist_msg.linear.x = 0
     twist_msg.angular.z = 0
     pub_.publish(twist_msg)
     
 def planning(goal):
+    """
+    State machine 
 
+    Sets an appropriate behaviour depending
+    on the current robot state, in order
+    to reach the goal.
+    The state machine keeps running until
+    the goal is reached or the action is
+    preempted (the goal gets cancelled).
+
+    Args:
+      goal (PoseActionGoal): (x,y,theta) goal pose
+    """
     global state_, desired_position_
     global act_s
 
