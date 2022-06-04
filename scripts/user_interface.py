@@ -1,3 +1,27 @@
+#! /usr/bin/env python
+
+## @package rt2_assignment1
+# \file user_interface.py
+# \brief Node implementing the user interface
+# \author Carmine Recchiuto
+# \version 0.1
+# \date 06/04/2022
+#
+# \details
+#
+# ServiceClient:<BR>
+#   /user_interface (rt2_assignment1.srv.Command)
+#
+# Description:
+#
+# This node receives inputs from the terminal.
+# If the input received is "1" it sends the Command 
+# "start" to the server /user_interface.
+# Otherwise, if "0" is received the Command "stop"
+# is sent the same way.
+#
+##
+
 import rospy
 import time
 from rt2_assignment1.srv import Command

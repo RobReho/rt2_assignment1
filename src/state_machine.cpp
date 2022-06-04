@@ -1,3 +1,31 @@
+/**
+* \file state_machine.cpp
+* \brief User interface server and FSM
+* \author Carmine Recchiuto, Roberta Reho
+* \version 1.0
+* \date 06/04/2022
+*
+* \details
+*
+* ServiceServer:<BR>
+*   /user_interface (rt2_assignment1::Command)
+*
+* ServiceClient:<BR>
+*   /position_server (rt2_assignment1::RandomPosition)
+*
+* ActionClient:<BR>
+*   /reaching_goal (rt2_assignment1::PLanningAction)
+*
+* Description:
+*
+* This node communicates with the user interface.
+* If the "start" command is issued it calls for a random 
+* position to send to the /reaching_goal node. 
+* In the same way it can cancel a running goal
+* if a request for "stop" is received from the
+* user_interface.
+
+*/
 #include "ros/ros.h"
 #include "rt2_assignment1/Command.h"
 #include "rt2_assignment1/Position.h"
