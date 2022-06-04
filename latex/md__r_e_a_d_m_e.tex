@@ -1,0 +1,30 @@
+Roberta Reho -\/ 5075214
+
+The package contains the nodes and the simulation environment for controlling a mobile robot in the Gazebo simulation environment. The mobile robot behaves as follows\+:
+\begin{DoxyEnumerate}
+\item a random goal \mbox{[}x,y,theta\mbox{]} is published upon request from the UI
+\item the robot orients itself towards the \mbox{[}x,y\mbox{]} destination;
+\item it then drives straight to that position adjusting the orientation;
+\item having reached the \mbox{[}x,y\mbox{]} goal position the robot turns in place in order to match the goal {\itshape theta};
+\item once the goal is reached the cycles repets itself from step 1, unless the there has been a canceling request from the UI;
+\end{DoxyEnumerate}
+
+The goal is implemented as an action, so it can be preempted at any time through the UI. The robot may restart when new goal is issued.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{Nodes Explanation}\label{md__r_e_a_d_m_e_autotoc_md1}
+Two nodes are implemented as python scripts
+\begin{DoxyItemize}
+\item {\bfseries{\mbox{\hyperlink{go__to__point_8py}{go\+\_\+to\+\_\+point.\+py}}}}\+: the action server managing the robot speed control depending on the goal received.
+\item {\bfseries{\mbox{\hyperlink{user__interface_8py}{user\+\_\+interface.\+py}}}}\+: the simple command line user interface, which sends the requests to start/stop the go\+\_\+to\+\_\+point behaviour.
+\end{DoxyItemize}
+
+Other two are C++ scripts
+\begin{DoxyItemize}
+\item {\bfseries{\mbox{\hyperlink{position__service_8cpp}{position\+\_\+service.\+cpp}}}}\+: the server generating a random pose \mbox{[}x,y,theta\mbox{]} as a response to a request.
+\item {\bfseries{\mbox{\hyperlink{state__machine_8cpp}{state\+\_\+machine.\+cpp}}}}\+: the F\+SM managing the request of a new goal pose when needed, sending it as a goal to \textquotesingle{}go\+\_\+to\+\_\+point\textquotesingle{} action server.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{Running}\label{md__r_e_a_d_m_e_autotoc_md2}
+The code can be run through the provided launch file {\bfseries{sim.\+launch}} that will launch all the nodes and the Gazebo environment.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{roslaunch rt2\_assignment1 sim.launch}
+\end{DoxyCode}
+ 
