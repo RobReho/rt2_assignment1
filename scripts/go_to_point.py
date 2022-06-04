@@ -1,5 +1,37 @@
 #! /usr/bin/env python
 
+## @package rt2_assignment1
+# \file go_to_point.py
+# \brief Node implementing the go_to_point behavior
+# \author Carmine Recchiuto, Roberta Reho
+# \version 0.1
+# \date 06/04/2022
+#
+# \details
+#
+# Publishes to:<BR>
+#   /cmd_vel (geometry_msgs.msg.Twist)
+#
+# ServiceServer:<BR>
+#   /odom (nav_msgs.msg.Odom)
+#
+# ActionServer:<BR>
+#   /go_to_point (rt2_assignment1.msg.PlanningAction)
+#
+# Description:
+#
+# This node controls the go_to_point behavior of
+# the robot using an action server.
+# Whenever a goal is received, a state machine
+# handles the behaviour: <BR>
+#
+#   1. align with the goal position <BR>
+#   2. go straight to the goal position <BR>
+#   3. align with the goal orientation <BR>
+#   4. goal pose reached <BR>
+#
+##
+
 import rospy
 from geometry_msgs.msg import Twist, Point, Pose
 from nav_msgs.msg import Odometry
@@ -255,8 +287,6 @@ def main():
     rospy.init_node('go_to_point')
     pub_ = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
     sub_odom = rospy.Subscriber('/odom', Odometry, clbk_odom)
-    #service = rospy.Service('/go_to_point', Position, go_to_point)
-    #rospy.spin()
     act_s = actionlib.SimpleActionServer(
         '/reaching_goal', rt2_assignment1.msg.PlanningAction, planning, auto_start=False)
     act_s.start()
