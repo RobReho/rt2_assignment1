@@ -1,3 +1,22 @@
+"""
+.. module:: user_interface
+    :platform: Unix
+    :synopsis: Node implementing the user interface
+.. moduleauthor:: Carmine Recchiuto <carmine.recchiuto@dibris.unige.it>
+
+ServiceClient:
+    /user_interface (rt2_assignment1.srv.Command)
+    
+Description:
+
+ This node receives inputs from the terminal.
+ If the input received is "1" it sends the Command 
+ "start" to the server /user_interface.
+ Otherwise, if "0" is received the Command "stop"
+ is sent the same way.
+
+"""
+
 import rospy
 import time
 from rt2_assignment1.srv import Command

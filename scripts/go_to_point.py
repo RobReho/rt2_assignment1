@@ -1,5 +1,32 @@
 #! /usr/bin/env python
+"""
+.. module:: go_to_point
+    :platform: Unix
+    :synopsis: Node implementing the go_to_point behavior
+.. moduleauthor:: Carmine Recchiuto <carmine.recchiuto@dibris.unige.it>, Roberta Reho <robertareho@gmail.com>
 
+Publishes to:
+    /cmd_vel (geometry_msgs.msg.Twist)
+
+ServiceServer:
+    /odom (nav_msgs.msg.Odom)
+
+ActionServer:
+    /go_to_point (rt2_assignment1.msg.PoseAction)
+
+Description:
+
+ This node controls the go_to_point behavior of
+ the robot using an action server.
+ Whenever a goal is received, a state machine
+ handles the behaviour: <BR>
+
+   1. align with the goal position <BR>
+   2. go straight to the goal position <BR>
+   3. align with the goal orientation <BR>
+   4. goal pose reached <BR>
+
+"""
 import rospy
 from geometry_msgs.msg import Twist, Point, Pose
 from nav_msgs.msg import Odometry
