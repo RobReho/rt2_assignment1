@@ -29,5 +29,5 @@ The code can be run through the provided launch file **sim.launch** that will la
 ```bash
  roslaunch rt2_assignment1 sim.launch
 ```
- https://robreho.github.io/rt2_assignment1/
+
 
