@@ -1,0 +1,48 @@
+Roberta Reho -\/ 5075214
+
+The R\+O\+S2 package contains the {\bfseries{state\+\_\+machine}} and {\bfseries{position\+\_\+service}} cpp nodes for controlling a mobile robot in the Gazebo simulation environment. To run the whole simulation it is necessary to use the {\bfseries{ros1\+\_\+bridge}} to be able to communicate with the R\+OS nodes {\bfseries{go\+\_\+to\+\_\+point}} and {\bfseries{user\+\_\+interface}}.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{Package content}\label{md__r_e_a_d_m_e_autotoc_md1}
+The two R\+O\+S2 nodes {\bfseries{state\+\_\+machine}} and {\bfseries{position\+\_\+service}} are developed using classes, so that they can be used as components, as the bridge only supports composable nodes.
+
+The file\+: {\bfseries{my\+\_\+mapping\+\_\+rules.\+yaml}} contains the name of the package in R\+OS and R\+O\+S2 that need to be bridged.
+
+The launch file {\ttfamily /launch/launch.py} runs the cpp nodes as a container.\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{Running}\label{md__r_e_a_d_m_e_autotoc_md2}
+To run the whole simulation is necessary to operate in both R\+OS and R\+O\+S2 workspaces. Please follow this step below to run the code both in R\+OS and R\+O\+S2\+: The R\+OS package used is available in the {\ttfamily main} branch.
+
+
+\begin{DoxyEnumerate}
+\item Open a terminal and {\bfseries{source ros}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#!/bin/bash}
+\DoxyCodeLine{source /root/<ros\_workspace>/devel/setup.bash}
+\end{DoxyCode}
+
+\item In that terminal build the workspace and run the lounch file\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{roslaunch rt2\_assignment1 sim\_bridge.launch}
+\end{DoxyCode}
+
+\item Open one more terminal and {\bfseries{source ros12}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#!/bin/bash}
+\DoxyCodeLine{source /root/my\_ros/devel/setup.bash}
+\DoxyCodeLine{source /root/my\_ros2/install/setup.bash}
+\end{DoxyCode}
+
+\item In that terminal build the bridge\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ros2 run ros1\_bridge dynamic\_bridge }
+\end{DoxyCode}
+
+\item Open one more terminal and {\bfseries{source ros2}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#!/bin/bash}
+\DoxyCodeLine{source /root/my\_ros2/install/setup.bash}
+\end{DoxyCode}
+
+\item In this last terminal launch the R\+O\+S2 container\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ros2 run rt2\_assignment1 launch.py}
+\end{DoxyCode}
+
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{Documentation}\label{md__r_e_a_d_m_e_autotoc_md3}
+Further documentation is available in the {\bfseries{docs}} folder. 
